@@ -123,25 +123,75 @@
 
         .project-card {
             cursor: pointer;
-            group: hover;
         }
 
-        .project-image {
+        /* Carousel */
+        .carousel {
+            position: relative;
             width: 100%;
             height: 300px;
-            background: var(--gray-light);
             overflow: hidden;
+            background: var(--gray-light);
         }
 
-        .project-image img {
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carousel-images img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            flex-shrink: 0;
         }
 
-        .project-card:hover .project-image img {
-            transform: scale(1.05);
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.8);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+
+        .project-card:hover .carousel-btn {
+            opacity: 1;
+        }
+
+        .carousel-btn.prev { left: 12px; }
+        .carousel-btn.next { right: 12px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .carousel-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.6);
+            cursor: pointer;
+        }
+
+        .carousel-dots span.active {
+            background: rgba(255,255,255,1);
         }
 
         .project-info {
@@ -271,6 +321,10 @@
                 gap: 24px;
                 text-align: center;
             }
+
+            .carousel-btn {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -302,10 +356,27 @@
     <section class="projects" id="projects">
         <h2 class="section-title">SELECTED WORKS</h2>
         <div class="project-grid">
-            <!-- Project 1 -->
+            <!-- Project 1: 上海交通大学桐乡高等研究院 -->
             <div class="project-card">
-                <div class="project-image">
-                    <img src="images/1.jpg" alt="上海交通大学桐乡高等研究院">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="images/1.jpg" alt="上海交通大学桐乡高等研究院">
+                        <img src="images/2.jpg" alt="上海交通大学桐乡高等研究院">
+                        <img src="images/3.jpg" alt="上海交通大学桐乡高等研究院">
+                        <img src="images/4.jpg" alt="上海交通大学桐乡高等研究院">
+                        <img src="images/5.jpg" alt="上海交通大学桐乡高等研究院">
+                        <img src="images/6.jpg" alt="上海交通大学桐乡高等研究院">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel(this, -1)">&#8249;</button>
+                    <button class="carousel-btn next" onclick="moveCarousel(this, 1)">&#8250;</button>
+                    <div class="carousel-dots">
+                        <span class="active" onclick="goToSlide(this, 0)"></span>
+                        <span onclick="goToSlide(this, 1)"></span>
+                        <span onclick="goToSlide(this, 2)"></span>
+                        <span onclick="goToSlide(this, 3)"></span>
+                        <span onclick="goToSlide(this, 4)"></span>
+                        <span onclick="goToSlide(this, 5)"></span>
+                    </div>
                 </div>
                 <div class="project-info">
                     <div class="project-name">上海交通大学桐乡高等研究院</div>
@@ -313,102 +384,65 @@
                 </div>
             </div>
 
-            <!-- Project 2 -->
+            <!-- Project 2: 示例项目2（可替换） -->
             <div class="project-card">
-                <div class="project-image">
-                    <img src="images/2.jpg" alt="上海交通大学桐乡高等研究院">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="images/1.jpg" alt="项目2">
+                        <img src="images/2.jpg" alt="项目2">
+                        <img src="images/3.jpg" alt="项目2">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel(this, -1)">&#8249;</button>
+                    <button class="carousel-btn next" onclick="moveCarousel(this, 1)">&#8250;</button>
+                    <div class="carousel-dots">
+                        <span class="active" onclick="goToSlide(this, 0)"></span>
+                        <span onclick="goToSlide(this, 1)"></span>
+                        <span onclick="goToSlide(this, 2)"></span>
+                    </div>
                 </div>
                 <div class="project-info">
-                    <div class="project-name">上海交通大学桐乡高等研究院</div>
-                    <div class="project-meta">2025 · 教育建筑</div>
+                    <div class="project-name">示例项目 A</div>
+                    <div class="project-meta">2024 · 教育建筑</div>
                 </div>
             </div>
 
-            <!-- Project 3 -->
+            <!-- Project 3: 示例项目3 -->
             <div class="project-card">
-                <div class="project-image">
-                    <img src="images/3.jpg" alt="上海交通大学桐乡高等研究院">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="images/4.jpg" alt="项目3">
+                        <img src="images/5.jpg" alt="项目3">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel(this, -1)">&#8249;</button>
+                    <button class="carousel-btn next" onclick="moveCarousel(this, 1)">&#8250;</button>
+                    <div class="carousel-dots">
+                        <span class="active" onclick="goToSlide(this, 0)"></span>
+                        <span onclick="goToSlide(this, 1)"></span>
+                    </div>
                 </div>
                 <div class="project-info">
-                    <div class="project-name">上海交通大学桐乡高等研究院</div>
-                    <div class="project-meta">2025 · 教育建筑</div>
+                    <div class="project-name">示例项目 B</div>
+                    <div class="project-meta">2023 · 文化建筑</div>
                 </div>
             </div>
 
-            <!-- Project 4 -->
+            <!-- Project 4: 示例项目4 -->
             <div class="project-card">
-                <div class="project-image">
-                    <img src="images/4.jpg" alt="上海交通大学桐乡高等研究院">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="images/6.jpg" alt="项目4">
+                        <img src="images/1.jpg" alt="项目4">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel(this, -1)">&#8249;</button>
+                    <button class="carousel-btn next" onclick="moveCarousel(this, 1)">&#8250;</button>
+                    <div class="carousel-dots">
+                        <span class="active" onclick="goToSlide(this, 0)"></span>
+                        <span onclick="goToSlide(this, 1)"></span>
+                    </div>
                 </div>
                 <div class="project-info">
-                    <div class="project-name">上海交通大学桐乡高等研究院</div>
-                    <div class="project-meta">2025 · 教育建筑</div>
-                </div>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="images/5.jpg" alt="上海交通大学桐乡高等研究院">
-                </div>
-                <div class="project-info">
-                    <div class="project-name">上海交通大学桐乡高等研究院</div>
-                    <div class="project-meta">2025 · 教育建筑</div>
-                </div>
-            </div>
-
-            <!-- Project 6 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="images/6.jpg" alt="上海交通大学桐乡高等研究院">
-                </div>
-                <div class="project-info">
-                    <div class="project-name">上海交通大学桐乡高等研究院</div>
-                    <div class="project-meta">2025 · 教育建筑</div>
-                </div>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800" alt="幼儿园">
-                </div>
-                <div class="project-info">
-                    <div class="project-name">围院理序 · 玉溪农业职业技术学院</div>
-                    <div class="project-meta">2023 · 职业教育</div>
-                </div>
-            </div>
-
-            <!-- Project 6 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800" alt="书店">
-                </div>
-                <div class="project-info">
-                    <div class="project-name">知识要进脑子里 · 上体大绿瓦书店改造</div>
-                    <div class="project-meta">2024 · 文创空间</div>
-                </div>
-            </div>
-
-            <!-- Project 7 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1574958269340-fa927503f3dd?w=800" alt="幼儿园">
-                </div>
-                <div class="project-info">
-                    <div class="project-name">一座"儿童之城" · 滁州幸福幼儿园</div>
-                    <div class="project-meta">2021 · 幼儿园</div>
-                </div>
-            </div>
-
-            <!-- Project 8 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800" alt="职校">
-                </div>
-                <div class="project-info">
-                    <div class="project-name">人才港湾的职业教育典范 · 烟台开发区职业技术学院</div>
-                    <div class="project-meta">2023 · 职业教育</div>
+                    <div class="project-name">示例项目 C</div>
+                    <div class="project-meta">2022 · 办公总部</div>
                 </div>
             </div>
         </div>
@@ -457,5 +491,45 @@
             <a href="#">WECHAT.COM</a>
         </div>
     </footer>
+
+    <script>
+        function moveCarousel(btn, direction) {
+            const carousel = btn.parentElement;
+            const imagesContainer = carousel.querySelector('.carousel-images');
+            const images = imagesContainer.querySelectorAll('img');
+            const dots = carousel.querySelectorAll('.carousel-dots span');
+            
+            let currentIndex = 0;
+            // Find current position
+            const transform = getComputedStyle(imagesContainer).transform;
+            if (transform !== 'none') {
+                const matrix = new DOMMatrix(transform);
+                currentIndex = Math.abs(Math.round(matrix.m41 / carousel.offsetWidth));
+            }
+            
+            let newIndex = currentIndex + direction;
+            if (newIndex < 0) newIndex = images.length - 1;
+            if (newIndex >= images.length) newIndex = 0;
+            
+            imagesContainer.style.transform = `translateX(-${newIndex * 100}%)`;
+            
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === newIndex);
+            });
+        }
+
+        function goToSlide(dot, index) {
+            const carousel = dot.parentElement.parentElement;
+            const imagesContainer = carousel.querySelector('.carousel-images');
+            const dots = carousel.querySelectorAll('.carousel-dots span');
+            
+            imagesContainer.style.transform = `translateX(-${index * 100}%)`;
+            
+            dots.forEach((d, i) => {
+                d.classList.toggle('active', i === index);
+            });
+        }
+    </script>
 </body>
 </html>
